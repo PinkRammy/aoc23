@@ -51,9 +51,9 @@ int main(int argc, char **argv) {
 		}
 
 		std::cout << sum << std::endl;
+		fileStream.close();
 	}
 
-	fileStream.close();
 
 	return 0;
 }
