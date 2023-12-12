@@ -34,6 +34,16 @@ int getNumberLength(int value) {
   return 0;
 }
 
+int getSumForLine(Number& number, std::vector<Symbol>& symbols) {
+  int sum = 0;
+  for (const Symbol symbol : symbols) {
+    if (symbol.x >= number.getAdjacentMinX() && symbol.x <= number.getAdjacentMaxX()) {
+      sum += number.value;
+    }
+  }
+  return sum;
+}
+
 int main(int argc, char** argv) {
   if (argc != 2) return 0;
 
@@ -101,33 +111,21 @@ int main(int argc, char** argv) {
       if (number.y > 0) {
         auto symbolsIt = symbolsByLine.find(number.y - 1);
         if (symbolsIt != symbolsByLine.end()) {
-          for (const Symbol symbol : symbolsIt->second) {
-            if (symbol.x >= number.getAdjacentMinX() && symbol.x <= number.getAdjacentMaxX()) {
-              sum += number.value;
-            }
-          }
+          sum += getSumForLine(number, symbolsIt->second);
         }
       }
 
       // get symbols on the same line
       auto symbolsIt = symbolsByLine.find(number.y);
       if (symbolsIt != symbolsByLine.end()) {
-        for (const Symbol symbol : symbolsIt->second) {
-          if (symbol.x >= number.getAdjacentMinX() && symbol.x <= number.getAdjacentMaxX()) {
-            sum += number.value;
-          }
-        }
+        sum += getSumForLine(number, symbolsIt->second);
       }
 
       // get symbols on the next line
       if (number.y < y) {
         auto symbolsIt = symbolsByLine.find(number.y + 1);
         if (symbolsIt != symbolsByLine.end()) {
-          for (const Symbol symbol : symbolsIt->second) {
-            if (symbol.x >= number.getAdjacentMinX() && symbol.x <= number.getAdjacentMaxX()) {
-              sum += number.value;
-            }
-          }
+          sum += getSumForLine(number, symbolsIt->second);
         }
       }
     }
