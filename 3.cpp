@@ -8,10 +8,6 @@ struct Symbol {
   int x;
   int y;
   char value;
-
-  bool isGear() {
-    return value == '*';
-  }
 };
 
 struct Number {
@@ -29,7 +25,7 @@ struct Number {
   }
 };
 
-int getValueLength(int value) {
+int getNumberLength(int value) {
   if (value <= 0) return 0;
   if (value < 10) return 1;
   if (value < 100) return 2;
@@ -44,7 +40,7 @@ int main(int argc, char** argv) {
   std::ifstream fileStream(argv[1]);
   if (fileStream.is_open()) {
     int sum = 0;
-    std::string fileStreamLine, value;
+    std::string fileStreamLine;
     char lineChar;
 
     std::unordered_map<int, std::vector<Symbol>> symbolsByLine;
@@ -58,7 +54,7 @@ int main(int argc, char** argv) {
         if (lineChar == '.') {
           // check if we need to push a number
           if (number > 0) {
-            numberLength = getValueLength(number);
+            numberLength = getNumberLength(number);
             Number nb = { x - numberLength, y, number, numberLength };
             numbers.push_back(nb);
             number = 0;
@@ -72,7 +68,7 @@ int main(int argc, char** argv) {
         if (symbolValue < 0 || symbolValue > 9) {
           // check if we need to push a number
           if (number > 0) {
-            numberLength = getValueLength(number);
+            numberLength = getNumberLength(number);
             Number nb = { x - numberLength, y, number, numberLength };
             numbers.push_back(nb);
             number = 0;
@@ -91,7 +87,7 @@ int main(int argc, char** argv) {
 
       // check if number is at end of line
       if (number > 0) {
-        numberLength = getValueLength(number);
+        numberLength = getNumberLength(number);
         Number nb = { x - numberLength, y, number, numberLength };
         numbers.push_back(nb);
         number = 0;
