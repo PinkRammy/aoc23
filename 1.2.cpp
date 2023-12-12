@@ -54,6 +54,5 @@ int main(int argc, char **argv) {
 		fileStream.close();
 	}
 
-
 	return 0;
 }
