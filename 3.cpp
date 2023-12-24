@@ -6,7 +6,6 @@
 
 struct Symbol {
   int x;
-  int y;
   char value;
 };
 
@@ -85,7 +84,7 @@ int main(int argc, char** argv) {
           }
 
           // add the symbol
-          Symbol sb = { x, y, lineChar };
+          Symbol sb = { x, lineChar };
           symbolsByLine[y].push_back(sb);
           continue;
         }
